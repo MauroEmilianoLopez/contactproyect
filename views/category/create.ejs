@@ -1,9 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Category Create</title>
+    <title>Gestión de Categorías y Subcategorías</title>
+    <link rel="stylesheet" href="create_category.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <h1>Gestión de Categorías y Subcategorías</h1>
+
+      <form id="category-form">
+        <h2>Agregar Nueva Categoría</h2>
+        <label for="category-name">Nombre de la Categoría:</label>
+        <input
+          type="text"
+          id="category-name"
+          placeholder="Ej: Empleado Público"
+          required
+        />
+
+        <button type="submit">Guardar Categoría</button>
+      </form>
+
+      <!-- Lista de categorías -->
+      <div class="categories-list">
+        <h2>Categorías Existentes</h2>
+        <ul id="categories">
+          <!-- Las categorías se cargarán dinámicamente -->
+        </ul>
+      </div>
+
+      <!-- Formulario para agregar subcategoría -->
+      <form id="subcategory-form">
+        <h2>Agregar Subcategoría</h2>
+        <label for="category-select">Seleccione una Categoría:</label>
+        <select id="category-select" required>
+          <!-- Las categorías se cargarán dinámicamente -->
+        </select>
+
+        <label for="subcategory-name">Nombre de la Subcategoría:</label>
+        <input
+          type="text"
+          id="subcategory-name"
+          placeholder="Ej: Médico"
+          required
+        />
+
+        <button type="submit">Guardar Subcategoría</button>
+      </form>
+
+      <!-- Lista de subcategorías -->
+      <div class="subcategories-list">
+        <h2>Subcategorías Existentes</h2>
+        <ul id="subcategories">
+          <!-- Las subcategorías se cargarán dinámicamente -->
+        </ul>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>

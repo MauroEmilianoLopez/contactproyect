@@ -1,16 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Edit</title>
+    <title>Editar Usuario</title>
     <link rel="stylesheet" href="/css/users/edit_user.css" />
   </head>
   <body>
     <main>
       <header>
-        <h1>Editar de Usuario</h1>
+        <h1>Editar Usuario</h1>
       </header>
+
+      <form id="editUserForm" enctype="multipart/form-data">
+        <fieldset>
+          <label for="name">Nombre:</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Ingrese su nombre"
+            required
+          />
+        </fieldset>
+
+        <fieldset>
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Ingrese su email"
+            required
+          />
+        </fieldset>
+
+        <fieldset>
+          <label for="phone">Teléfono:</label>
+          <input type="tel" id="phone" placeholder="Ingrese su teléfono" />
+        </fieldset>
+
+        <fieldset>
+          <label for="age">Edad:</label>
+          <input type="number" id="age" placeholder="Ingrese su edad" />
+        </fieldset>
+
+        <fieldset>
+          <label for="address">Domicilio:</label>
+          <input type="text" id="address" placeholder="Ingrese su domicilio" />
+        </fieldset>
+
+        <fieldset>
+          <label for="gender">Sexo:</label>
+          <select id="gender">
+            <option value="">Seleccionar</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <label for="photo">Foto actual:</label>
+          <img
+            id="currentPhoto"
+            src="https://via.placeholder.com/150"
+            alt="Foto de perfil actual"
+            width="150"
+          />
+          <label for="newPhoto">Cambiar foto:</label>
+          <input type="file" id="newPhoto" accept="image/*" />
+        </fieldset>
+
+        <fieldset>
+          <label for="linkedinUrl">URL de LinkedIn:</label>
+          <input
+            type="url"
+            id="linkedinUrl"
+            placeholder="Ingrese su URL de LinkedIn"
+          />
+        </fieldset>
+
+        <button type="submit">Guardar Cambios</button>
+      </form>
+
+      <p id="successMessage"></p>
+      <p id="errorMessage"></p>
     </main>
+
+    <script src="/js/users/edit_user.js"></script>
   </body>
 </html>

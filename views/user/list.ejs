@@ -1,16 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User List</title>
-    <link rel="stylesheet" href="/css/users/create_user.css" />
+    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" href="/css/users/user_list.css" />
   </head>
   <body>
     <main>
       <header>
         <h1>Lista de Usuarios</h1>
       </header>
+
+      <!-- Tabla para mostrar los usuarios -->
+      <table id="userTable">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Edad</th>
+            <th>Domicilio</th>
+            <th>Sexo</th>
+            <th>Foto</th>
+            <th>Categoría</th>
+            <th>Subcategoría</th>
+            <th>LinkedIn</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </main>
+
+    <script src="/js/users/user_list.js"></script>
   </body>
 </html>

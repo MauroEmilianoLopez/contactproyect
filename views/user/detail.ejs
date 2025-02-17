@@ -1,16 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Detail</title>
+    <title>Detalles del Usuario</title>
     <link rel="stylesheet" href="/css/users/detail_user.css" />
   </head>
   <body>
     <main>
       <header>
-        <h1>Mostrar de Usuario</h1>
+        <h1>Detalles del Usuario</h1>
       </header>
+
+      <!-- Contenedor para mostrar los detalles del usuario -->
+      <section id="userDetails">
+        <div class="detail-item">
+          <label>Nombre:</label>
+          <span id="name">Nombre del Usuario</span>
+        </div>
+        <div class="detail-item">
+          <label>Email:</label>
+          <span id="email">usuario@example.com</span>
+        </div>
+        <div class="detail-item">
+          <label>Teléfono:</label>
+          <span id="phone">+123456789</span>
+        </div>
+        <div class="detail-item">
+          <label>Edad:</label>
+          <span id="age">25</span>
+        </div>
+        <div class="detail-item">
+          <label>Domicilio:</label>
+          <span id="address">Calle Falsa 123</span>
+        </div>
+        <div class="detail-item">
+          <label>Sexo:</label>
+          <span id="gender">Masculino</span>
+        </div>
+        <div class="detail-item">
+          <label>Foto:</label>
+          <img
+            id="photo"
+            src="https://via.placeholder.com/150"
+            alt="Foto de perfil"
+            width="150"
+          />
+        </div>
+        <div class="detail-item">
+          <label>URL de LinkedIn:</label>
+          <a
+            id="linkedinUrl"
+            href="https://www.linkedin.com/in/usuario"
+            target="_blank"
+            >Ver LinkedIn</a
+          >
+        </div>
+      </section>
+
+      <button id="editProfileBtn">Editar Perfil</button>
     </main>
+
+    <script src="/js/users/detail_user.js"></script>
   </body>
 </html>
