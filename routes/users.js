@@ -5,6 +5,7 @@ import {
   createUser,
   editUser,
   saveUser,
+  updateUser,
 } from "../controllers/users.js";
 
 import upload from "../middlewares/upload.js";
@@ -15,6 +16,7 @@ userRouter.get("/", listUser);
 userRouter.get("/create", createUser);
 userRouter.get("/edit/:id", editUser);
 userRouter.get("/show/:id", detailUser);
-userRouter.post("/save", upload.any(), saveUser);
+userRouter.post("/update/:id", [upload.any()], updateUser);
+userRouter.post("/save", [upload.any()], saveUser);
 
 export default userRouter;

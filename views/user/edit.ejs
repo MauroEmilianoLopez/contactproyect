@@ -12,12 +12,14 @@
         <h1>Editar Usuario</h1>
       </header>
 
-      <form id="editUserForm" enctype="multipart/form-data">
+      <form action="/users/update/<%= contact.id %>" method="post" id="editUserForm" enctype="multipart/form-data">
         <fieldset>
           <label for="name">Nombre:</label>
           <input
             type="text"
             id="name"
+            name="name"
+            value="<%= contact.name %>"
             placeholder="Ingrese su nombre"
             required
           />
@@ -28,6 +30,8 @@
           <input
             type="email"
             id="email"
+            name="email"
+            value="<%= contact.email %>"
             placeholder="Ingrese su email"
             required
           />
@@ -35,39 +39,59 @@
 
         <fieldset>
           <label for="phone">Teléfono:</label>
-          <input type="tel" id="phone" placeholder="Ingrese su teléfono" />
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value="<%= contact.phone %>"
+            placeholder="Ingrese su teléfono"
+          />
         </fieldset>
 
         <fieldset>
           <label for="age">Edad:</label>
-          <input type="number" id="age" placeholder="Ingrese su edad" />
+          <input
+            type="number"
+            id="age"
+            name="age"
+            value="<%= contact.age %>"
+            placeholder="Ingrese su edad"
+          />
         </fieldset>
 
         <fieldset>
           <label for="address">Domicilio:</label>
-          <input type="text" id="address" placeholder="Ingrese su domicilio" />
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value="<%= contact.address %>"
+            placeholder="Ingrese su domicilio"
+          />
         </fieldset>
 
         <fieldset>
           <label for="gender">Sexo:</label>
           <select id="gender">
-            <option value="">Seleccionar</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-            <option value="Otro">Otro</option>
+            <option value="" disabled>Seleccionar</option>
+            <option value="Masculino" <%= contact.gender == "Masculino" ? "selected" : "" %>>Masculino</option>
+            <option value="Femenino" <%= contact.gender == "Femenino" ? "selected" : "" %>>Femenino</option>
+            <option value="Otro" <%= contact.gender == "Otro" ? "selected" : "" %>>Otro</option>
           </select>
         </fieldset>
 
         <fieldset>
-          <label for="photo">Foto actual:</label>
-          <img
-            id="currentPhoto"
-            src="https://via.placeholder.com/150"
-            alt="Foto de perfil actual"
-            width="150"
-          />
+          <% if (contact.photo) { %>
+            <label for="photo">Foto actual:</label>
+            <img
+              id="currentPhoto"
+              src="/assets/<%= contact.photo.filename %>"
+              alt="Foto de perfil actual"
+              width="150"
+            />
+          <% } %>         
           <label for="newPhoto">Cambiar foto:</label>
-          <input type="file" id="newPhoto" accept="image/*" />
+          <input type="file" id="newPhoto" name="newPhoto"  accept="image/*" />
         </fieldset>
 
         <fieldset>
@@ -75,7 +99,10 @@
           <input
             type="url"
             id="linkedinUrl"
-            placeholder="Ingrese su URL de LinkedIn"
+
+            name="link",
+            value="<%= contact.link %>"
+                       placeholder="Ingrese su URL de LinkedIn"
           />
         </fieldset>
 

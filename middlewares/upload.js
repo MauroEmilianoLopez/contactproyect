@@ -16,7 +16,13 @@ const filename = (req, file, cb) => {
 };
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+    "image/jpg",
+  ];
   if (!file || allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
