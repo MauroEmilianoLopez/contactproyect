@@ -27,14 +27,16 @@ app.use(express.static(join(process.cwd(), "public")));
 import user from "./middlewares/user.js";
 app.use(user);
 
+import authRouter from "./routes/auth.js";
+app.use(authRouter);
+
+import auth from "./middlewares/auth.js";
+app.use(auth);
+
 import userRouter from "./routes/users.js";
 app.use("/users", userRouter);
+
 import categoryRouter from "./routes/category.js";
 app.use("/categories", categoryRouter);
-
-app.get("/", (req, res) => res.render("auth/login"));
-app.post("/access", (req, res) =>
-  res.status(202).send(JSON.stringify(req.body, null, 2))
-);
 
 app.listen(port, init);

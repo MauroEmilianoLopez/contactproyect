@@ -12,12 +12,18 @@
         <h1>Crear Usuario</h1>
       </header>
 
-      <form id="createUserForm" enctype="multipart/form-data">
+      <form
+        action="/users/save"
+        method="post"
+        id="createUserForm"
+        enctype="multipart/form-data"
+      >
         <fieldset>
           <label for="name">Nombre:</label>
           <input
             type="text"
             id="name"
+            name="name"
             placeholder="Ingrese su nombre"
             required
           />
@@ -28,6 +34,7 @@
           <input
             type="email"
             id="email"
+            name="email"
             placeholder="Ingrese su email"
             required
           />
@@ -35,23 +42,38 @@
 
         <fieldset>
           <label for="phone">Teléfono:</label>
-          <input type="tel" id="phone" placeholder="Ingrese su teléfono" />
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Ingrese su teléfono"
+          />
         </fieldset>
 
         <fieldset>
           <label for="age">Edad:</label>
-          <input type="number" id="age" placeholder="Ingrese su edad" />
+          <input
+            type="number"
+            id="age"
+            name="age"
+            placeholder="Ingrese su edad"
+          />
         </fieldset>
 
         <fieldset>
           <label for="address">Domicilio:</label>
-          <input type="text" id="address" placeholder="Ingrese su domicilio" />
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Ingrese su domicilio"
+          />
         </fieldset>
 
         <fieldset>
           <label for="gender">Sexo:</label>
-          <select id="gender">
-            <option value="">Seleccionar</option>
+          <select id="gender" name="gender">
+            <option value="" disabled selected>Seleccionar</option>
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
             <option value="Otro">Otro</option>
@@ -60,7 +82,7 @@
 
         <fieldset>
           <label for="photo">Foto:</label>
-          <input type="file" id="photo" accept="image/*" required />
+          <input type="file" id="photo" name="photo" accept="image/*" />
         </fieldset>
 
         <fieldset>
@@ -68,6 +90,7 @@
           <input
             type="url"
             id="linkedinUrl"
+            name="link"
             placeholder="Ingrese su URL de LinkedIn"
           />
         </fieldset>

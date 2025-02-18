@@ -1,0 +1,7 @@
+<a href="/logout" id="user_logout">
+  <% if (userSession.fileId) { %>
+  <img src="/assets/<%= userSession.photo.filename %>" alt="" />
+  <% } else { %>
+  <span> <%= userSession.email.charAt(0).toUpperCase() %> </span>
+  <% } %>
+</a>

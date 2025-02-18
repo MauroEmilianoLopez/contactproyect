@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalles del Usuario</title>
     <link rel="stylesheet" href="/css/users/detail_user.css" />
+    <link rel="stylesheet" href="/css/user.css" />
   </head>
   <body>
+    <%- include('../user.ejs') %>
     <main>
       <header>
         <h1>Detalles del Usuario</h1>
@@ -16,49 +18,49 @@
       <section id="userDetails">
         <div class="detail-item">
           <label>Nombre:</label>
-          <span id="name">Nombre del Usuario</span>
+          <span id="name"><%= contact.name %></span>
         </div>
         <div class="detail-item">
           <label>Email:</label>
-          <span id="email">usuario@example.com</span>
+          <span id="email"><%= contact.email %></span>
         </div>
         <div class="detail-item">
           <label>Teléfono:</label>
-          <span id="phone">+123456789</span>
+          <span id="phone"><%= contact.phone %></span>
         </div>
         <div class="detail-item">
           <label>Edad:</label>
-          <span id="age">25</span>
+          <span id="age"><%= contact.age %></span>
         </div>
         <div class="detail-item">
           <label>Domicilio:</label>
-          <span id="address">Calle Falsa 123</span>
+          <span id="address"><%= contact.address %></span>
         </div>
         <div class="detail-item">
           <label>Sexo:</label>
-          <span id="gender">Masculino</span>
+          <span id="gender"><%= contact.gender %></span>
         </div>
         <div class="detail-item">
           <label>Foto:</label>
           <img
             id="photo"
-            src="https://via.placeholder.com/150"
+            src="/assets/<%= contact.photo.filename %>"
             alt="Foto de perfil"
             width="150"
           />
         </div>
         <div class="detail-item">
           <label>URL de LinkedIn:</label>
-          <a
-            id="linkedinUrl"
-            href="https://www.linkedin.com/in/usuario"
-            target="_blank"
+          <a id="linkedinUrl" href="<%= contact.link %>" target="_blank"
             >Ver LinkedIn</a
           >
         </div>
       </section>
-
-      <button id="editProfileBtn">Editar Perfil</button>
+      <% if (userSession.isAdmin || userSession.id == contact.id) { %>
+      <a href="/users/edit/<%= contact.id %>" id="editProfileBtn">
+        Editar Perfil
+      </a>
+      <% } %>
     </main>
 
     <script src="/js/users/detail_user.js"></script>
