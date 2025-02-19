@@ -4,51 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Usuarios</title>
-    <link rel="stylesheet" href="/css/users/list_user.css" />
-    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/users/list.css">
   </head>
   <body>
 
-    <%- include('../user.ejs') %>
+    <%- include('../partial/user.ejs') %>
 
     <main>
       <header>
         <h1>Lista de Contactos</h1>
         <nav>
           <a href="/users/create">Nuevo Contacto</a>
-          <a href="/categories/create">Nueva Categoría</a>
         </nav>
       </header>
-
-      <!-- Tabla para mostrar los usuarios -->
-      <table id="userTable">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Edad</th>
-            <th>Domicilio</th>
-            <th>Sexo</th>
-            <th>LinkedIn</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% users.filter(({isAdmin}) => !isAdmin).forEach(user => { %>
-          <tr>
-            <td><%= user.name %></td>
-            <td><%= user.email %></td>
-            <td><%= user?.phone ?? "Indefinido" %></td>
-            <td><%= user?.age ?? "Indefinido" %></td>
-            <td><%= user?.address ?? "Indefinido" %></td>
-            <td><%= user?.gender ?? "Indefinido" %></td>
-            <td><a href="<%= user?.link ?? ""  %>" target="_blank"><%= user?.link ? "Perfil" : "Indefinido" %></a</td>
-            <td><a href="/users/show/<%= user.id %>">Ver más</a></td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+      <ul class="users">
+        <% users.forEach(user => { %>
+        <li>
+          <dl>
+            <dd><%= user.name %></dd>
+            <dd><%= user.email %></dd>
+          </dl>
+          <nav>
+            <% if (user?.link) { %>
+              <a href="<%= user?.link ?? "#"  %>" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                  <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/>
+                </svg>
+              </a>
+            <% } %>
+            <a href="/users/show/<%= user.id %>">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/>
+              </svg>
+            </a>
+          </nav>
+        </li>
+        <% }) %>
+      </ul>
       <nav>
         <% if (page > 0 && users.length == 2) { %>
           <a href="/users/?page=<%= Number(page) - 1 %>">Anterior</a>
@@ -59,8 +51,20 @@
             <a href="/users/?page=<%= Number(page) - 1 %>">Anterior</a>
           <% } %>
       </nav>
+      <header>
+       
+          <h1>Lista de Categorias</h1>
+          <nav>
+            <a href="/categories/create">Nueva Categoría</a>
+          </nav>
+      </header>
+      <ul class="categories">
+        <% categories.forEach(category => { %>
+          <li>
+            <a href="/categories/show/<%= category.id %>"><%= category.name %></a>
+          </li>
+        <% }) %>
+      </ul>
     </main>
-
-    <script src="/js/users/user_list.js"></script>
   </body>
 </html>

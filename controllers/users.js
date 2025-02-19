@@ -11,7 +11,15 @@ export const listUser = async (req, res) => {
   query.skip = Number(page) * 2;
   query.take = 2;
   const users = await prisma.contact.findMany(query);
-  return res.render("user/list", { users, page });
+  const categories = await prisma.category.findMany({
+    where: {
+      parentId: null,
+    },
+    include: {
+      subcategories: true,
+    },
+  });
+  return res.render("user/list", { users, page, categories });
 };
 export const editUser = async (req, res) => {
   const { id = 0 } = req.params;

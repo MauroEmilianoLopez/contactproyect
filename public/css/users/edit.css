@@ -1,0 +1,106 @@
+@import url("../imports/base.css");
+@import url("../imports/user.css");
+
+body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body > main {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 0 0.25rem 0 var(--shadow-dark);
+}
+
+body > main > header {
+  background-color: var(--dark-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.25rem 1rem;
+}
+
+body > main > header h1 {
+  flex: 1;
+  color: var(--light-primary);
+  display: flex;
+  align-items: center;
+  text-wrap: nowrap;
+  gap: 1rem;
+}
+
+body > main > form {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding: 1rem;
+}
+body > main > form fieldset {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  width: calc(50% - 1rem);
+  border: 0.1rem solid var(--primary);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+body > main > form fieldset label {
+  cursor: pointer;
+}
+body > main > form fieldset input {
+  flex: 1;
+  padding: 0.25rem;
+  outline: none;
+  border-bottom: 0.1rem solid var(--primary);
+}
+body > main > form fieldset select {
+  flex: 1;
+}
+
+body > main > form fieldset:nth-child(7) {
+  width: 100%;
+}
+body > main > form fieldset:nth-child(8) {
+  width: 100%;
+}
+body > main > form label[for="photo"] {
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body > main > form label[for="photo"] svg {
+  fill: var(--dark-primary);
+}
+
+body > main > form > button {
+  padding: 0.25rem 0.75rem;
+  background-color: var(--primary);
+  color: var(--light-primary);
+  text-align: center;
+  border-radius: 1rem;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0 auto;
+}
+body > main > form > button:hover {
+  background-color: var(--dark-primary);
+  color: var(--white);
+}

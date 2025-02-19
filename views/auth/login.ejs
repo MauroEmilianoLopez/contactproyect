@@ -11,7 +11,6 @@
       <h1>Iniciar Sesión</h1>
 
       <form action="/access" method="post" id="loginForm">
-        <label for="email">Email:</label>
         <input
           type="email"
           id="email"
@@ -19,6 +18,7 @@
           placeholder="Ingrese su email"
           required
         />
+        <label for="email">Email:</label>
         <button type="submit">Ingresar</button>
       </form>
       <% if (error) { %>

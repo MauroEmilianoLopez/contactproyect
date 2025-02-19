@@ -3,15 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestión de Categorías y Subcategorías</title>
-    <link rel="stylesheet" href="/css/categories/create_category.css" />
+    <title>Agregar Nueva Categoría</title>
   </head>
   <body>
-    <div class="container">
-      <h1>Gestión de Categorías y Subcategorías</h1>
-
+    <%- include('../partial/user.ejs') %>
+    <main>
+      <h1>Agregar Nueva Categoría</h1>
       <form action="/categories/save" method="post" id="category-form">
-        <h2>Agregar Nueva Categoría</h2>
         <label for="name">Nombre de la Categoría:</label>
         <input
           type="text"
@@ -20,8 +18,9 @@
           placeholder="Ej: Empleado Público"
           required
         />
-        <button type="submit">Guardar Categoría</button>
+        <button type="submit">Guardar</button>
       </form>
+    </main>
 
     <script src="app.js"></script>
   </body>
