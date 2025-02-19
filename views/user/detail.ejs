@@ -4,59 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalles del Usuario</title>
-    <link rel="stylesheet" href="/css/users/detail_user.css" />
-    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/users/detail.css" />
+
   </head>
   <body>
     <%- include('../partial/user.ejs') %>
     <main>
       <header>
         <h1>Detalles del Usuario</h1>
+        <a href="/users">Volver</a>
       </header>
-
+      <a id="linkedinUrl" href="<%= contact.link %>" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+          <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/>
+        </svg>
+      </a>
+      <picture>
+          
+        <img
+          id="photo"
+          src="/assets/<%= contact.photo.filename %>"
+          alt="Foto de perfil"
+          width="150"
+        />
+        </picture>
       <!-- Contenedor para mostrar los detalles del usuario -->
       <article id="userDetails">
-        <details class="detail-item">
-          <summary>Nombre:</summary>
-          <span id="name"><%= contact.name %></span>
-        </details>
-        <details class="detail-item">
-          <summary>Email:</summary>
-          <span id="email"><%= contact.email %></span>
-        </details>
-        <details class="detail-item">
-          <summary>Teléfono:</summary>
-          <span id="phone"><%= contact.phone %></span>
-        </details>
-        <details class="detail-item">
-          <summary>Edad:</summary>
-          <span id="age"><%= contact.age %></span>
-        </details>
-        <details class="detail-item">
-          <summary>Domicilio:</summary>
-          <span id="address"><%= contact.address %></span>
-        </details>
-        <details class="detail-item">
-          <summary>Sexo:</summary>
-          <span id="gender"><%= contact.gender %></span>
-        </details>
-        <details class="detail-item">
-          <summary>Foto:</summary>
-          <img
-            id="photo"
-            src="/assets/<%= contact.photo.filename %>"
-            alt="Foto de perfil"
-            width="150"
-          />
-        </details>
-        <details class="detail-item">
-          <summary>URL de LinkedIn</summary>
-          <a id="linkedinUrl" href="<%= contact.link %>" target="_blank">
-            Ver LinkedIn
-          </a>
-        </details>
+        <dl>
+          <dt>Nombre:</dt>
+          <dd><%= contact.name %></dd>
+        </dl>
+        <dl>
+          <dt>Email:</dt>
+          <dd><%= contact.email %></dd>
+        </dl>
+        <dl>
+          <dt>Teléfono:</dt>
+          <dd><%= contact.phone %></dd>
+        </dl>
+        <dl>
+          <dt>Edad:</dt>
+          <dd><%= contact.age %></dd>
+        </dl>
+        <dl>
+          <dt>Domicilio:</dt>
+          <dd><%= contact.address %></dd>
+        </dl>
+        <dl>
+          <dt>Sexo:</dt>
+          <dd><%= contact.gender %></dd>
+        </dl>
       </article>
-      <article>
+      <article id="categories">
           <h2>Categorias:</h2>
           <% if (contact.categories.length == 0) { %>
           <p>No tiene ninguna categoria asignada</p>
@@ -92,7 +91,7 @@
         </details>
       </article>
       <% if (userSession.isAdmin || userSession.id == contact.id) { %>
-      <article>
+      <article id="addCategories">
         <h3>Asignar Categorias</h3>
         <form action="/users/setCategories/<%= contact.id %>" method="post">
           <% categories.forEach(category => { %> <% if

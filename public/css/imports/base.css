@@ -7,6 +7,8 @@
   --light-primary: #bbdefb;
   --white: #fafafa;
   --black: #212121;
+  --danger: #b71c1c;
+  --warn: #ffc107;
   --shadow-light: rgba(187, 222, 251, 0.3);
   --shadow-dark: rgba(13, 71, 161, 0.3);
 }

@@ -35,6 +35,19 @@ body > main > header h1 {
   text-wrap: nowrap;
   gap: 1rem;
 }
+body > main > header a {
+  width: 2rem;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--danger);
+  padding: 0.25rem;
+}
+body > main > header a svg {
+  fill: var(--white);
+}
 
 body > main > form {
   display: flex;
@@ -82,6 +95,13 @@ body > main > form label[for="photo"] {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+body > main > form picture {
+  width: 4rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 body > main > form label[for="photo"] svg {
