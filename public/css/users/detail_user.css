@@ -4,9 +4,9 @@ body {
   padding: 0;
   background-color: #f4f4f9;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 main {
@@ -17,6 +17,9 @@ main {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 header h1 {

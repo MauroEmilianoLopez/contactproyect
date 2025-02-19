@@ -15,47 +15,102 @@
       </header>
 
       <!-- Contenedor para mostrar los detalles del usuario -->
-      <section id="userDetails">
-        <div class="detail-item">
-          <label>Nombre:</label>
+      <article id="userDetails">
+        <details class="detail-item">
+          <summary>Nombre:</summary>
           <span id="name"><%= contact.name %></span>
-        </div>
-        <div class="detail-item">
-          <label>Email:</label>
+        </details>
+        <details class="detail-item">
+          <summary>Email:</summary>
           <span id="email"><%= contact.email %></span>
-        </div>
-        <div class="detail-item">
-          <label>Teléfono:</label>
+        </details>
+        <details class="detail-item">
+          <summary>Teléfono:</summary>
           <span id="phone"><%= contact.phone %></span>
-        </div>
-        <div class="detail-item">
-          <label>Edad:</label>
+        </details>
+        <details class="detail-item">
+          <summary>Edad:</summary>
           <span id="age"><%= contact.age %></span>
-        </div>
-        <div class="detail-item">
-          <label>Domicilio:</label>
+        </details>
+        <details class="detail-item">
+          <summary>Domicilio:</summary>
           <span id="address"><%= contact.address %></span>
-        </div>
-        <div class="detail-item">
-          <label>Sexo:</label>
+        </details>
+        <details class="detail-item">
+          <summary>Sexo:</summary>
           <span id="gender"><%= contact.gender %></span>
-        </div>
-        <div class="detail-item">
-          <label>Foto:</label>
+        </details>
+        <details class="detail-item">
+          <summary>Foto:</summary>
           <img
             id="photo"
             src="/assets/<%= contact.photo.filename %>"
             alt="Foto de perfil"
             width="150"
           />
-        </div>
-        <div class="detail-item">
-          <label>URL de LinkedIn:</label>
-          <a id="linkedinUrl" href="<%= contact.link %>" target="_blank"
-            >Ver LinkedIn</a
-          >
-        </div>
-      </section>
+        </details>
+        <details class="detail-item">
+          <summary>URL de LinkedIn</summary>
+          <a id="linkedinUrl" href="<%= contact.link %>" target="_blank">
+            Ver LinkedIn
+          </a>
+        </details>
+        <details class="detail-item">
+          <summary>Categorias:</summary>
+          <% if (contact.categories.length == 0) { %>
+          <p>No tiene ninguna categoria asignada</p>
+          <% } else { %> <% contact.categories.forEach(category => { %> <% if
+          (category.parent) { %>
+          <dl>
+            <dt><%= category.parent.name %></dt>
+            <dd>
+              <a href="/categories/show/<%= category.parent.id %>">
+                <%= category.name %>
+              </a>
+            </dd>
+          </dl>
+          <% } else { %>
+          <p>
+            <a href="/categories/show/<%= category.id %>">
+              <%= category.name %>
+            </a>
+          </p>
+          <% } %> <% }) %> <% } %>
+        </details>
+      </article>
+
+      <article>
+        <h3>Asignar Categorias</h3>
+        <form action="/users/setCategories/<%= contact.id %>" method="post">
+          <% categories.forEach(category => { %> <% if
+          (category.subcategories.length > 0) { %>
+          <fieldset>
+            <legend><%= category.name %></legend>
+            <% category.subcategories.forEach(subcategory => { %> <% var include
+            = contact.categories.map(({id}) => Number(id)) %> <input
+            type="radio" name="<%= category.name %>" value="<%= subcategory.id
+            %>" id="category-<%= subcategory.id %>" <%=
+            include.includes(subcategory.id) ? "checked" : "" %> />
+            <label for="category-<%= subcategory.id %>">
+              <%= subcategory.name %>
+            </label>
+            <% }) %>
+          </fieldset>
+          <% } else { %>
+          <fieldset>
+            <% var include = contact.categories.map(({id}) => Number(id)) %>
+            <input type="checkbox" name="categories[]" id="category-<%=
+            category.id %>" value="<%= category.id %>" <%=
+            include.includes(category.id) ? "checked" : "" %> />
+            <label for="category-<%= category.id %>">
+              <%= category.name %>
+            </label>
+          </fieldset>
+          <% } %> <% }) %>
+          <button type="submit">Asignar</button>
+        </form>
+      </article>
+
       <% if (userSession.isAdmin || userSession.id == contact.id) { %>
       <a href="/users/edit/<%= contact.id %>" id="editProfileBtn">
         Editar Perfil

@@ -4,6 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Category Detail</title>
+    <link rel="stylesheet" href="/css/categories/detail_category.css" />
   </head>
-  <body></body>
+  <body>
+    <main>
+      <header>Categoria: <%= category.name %></header>
+      <ul>
+        <% category.subcategories.forEach(subcategory => { %>
+        <li>
+          <%= subcategory.name %>
+          <form action="/categories/removeSubcategory">
+            <input
+              type="hidden"
+              value="<%= subcategory.id %>"
+              name="subcategory"
+            />
+            <input type="hidden" value="<%= category.id %>" name="parentId" />
+            <button type="button">Borrar</button>
+          </form>
+        </li>
+        <% }) %>
+      </ul>
+      <form action="/categories/addSubcategory" method="post">
+        <label for="newSub">Nueva sub-categoria</label>
+        <input type="text" id="newSub" name="name" />
+        <input type="hidden" value="<%= category.id %>" name="parentId" />
+        <button type="button">Agregar</button>
+      </form>
+    </main>
+  </body>
 </html>

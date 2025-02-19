@@ -24,7 +24,16 @@ export const access = async (req, res) => {
     });
     return res.redirect(`/?${error.toString()}`);
   } catch (error) {
-    res.status(500).send(error);
+    if (error.code) {
+      res.status(500).send({
+        error: {
+          code: error.code,
+          msg: error.message,
+          field: error.meta,
+        },
+      });
+    }
+    return res.status(500).send(error);
   }
 };
 

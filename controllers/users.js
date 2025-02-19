@@ -27,15 +27,31 @@ export const editUser = async (req, res) => {
 };
 export const detailUser = async (req, res) => {
   const { id = 0 } = req.params;
+  const mainCategories = await prisma.category.findMany({
+    where: {
+      parentId: null,
+    },
+    include: {
+      subcategories: true,
+    },
+  });
   const user = await prisma.contact.findUnique({
     where: {
       id: Number(id),
     },
     include: {
       photo: true,
+      categories: {
+        include: {
+          parent: true,
+        },
+      },
     },
   });
-  return res.render("user/detail", { contact: user });
+  return res.render("user/detail", {
+    contact: user,
+    categories: mainCategories,
+  });
 };
 
 export const saveUser = async (req, res) => {
@@ -114,6 +130,49 @@ export const updateUser = async (req, res) => {
       },
     });
     return res.redirect(`/users/show/${contact.id}`);
+  } catch (error) {
+    return res.status(500).send({
+      error: {
+        code: error.code,
+        msg: error.message,
+        field: error.meta,
+      },
+    });
+  }
+};
+
+export const setCategoriesUser = async (req, res) => {
+  try {
+    let subcategories = Object.keys(req.body);
+
+    subcategories = subcategories.filter((key) => key != "categories");
+
+    subcategories = subcategories.map((key) => ({ id: Number(req.body[key]) }));
+
+    let categories = Array.from(req.body.categories);
+
+    categories = categories.filter((element) => element != null);
+
+    categories = categories.map((element) => ({ id: Number(element) }));
+
+    categories = categories.concat(subcategories);
+
+    const allCategories = [...new Set(categories)];
+
+    const result = await prisma.contact.update({
+      where: {
+        id: Number(req.params.id),
+      },
+      data: {
+        categories: {
+          set: allCategories,
+        },
+      },
+      include: {
+        categories: true,
+      },
+    });
+    return res.redirect(`/users/show/${req.params.id}`);
   } catch (error) {
     return res.status(500).send({
       error: {
