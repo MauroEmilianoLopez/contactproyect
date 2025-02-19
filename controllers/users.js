@@ -8,6 +8,9 @@ export const listUser = async (req, res) => {
   const { page = 0 } = req.query;
   const query = {};
   query.where = { isAdmin: false };
+  if (!req.session.user.isAdmin) {
+    query.where.isActive = true;
+  }
   query.skip = Number(page) * 2;
   query.take = 2;
   const users = await prisma.contact.findMany(query);
@@ -185,6 +188,27 @@ export const setCategoriesUser = async (req, res) => {
       },
     });
     return res.redirect(`/users/show/${req.params.id}`);
+  } catch (error) {
+    return res.status(500).send({
+      error: {
+        code: error.code,
+        msg: error.message,
+        field: error.meta,
+      },
+    });
+  }
+};
+
+export const setStatusUser = async (req, res) => {
+  try {
+    const user = await prisma.contact.findUniqueOrThrow({
+      where: { id: Number(req.body.userId) },
+    });
+    await prisma.contact.update({
+      where: { id: user.id },
+      data: { isActive: !user.isActive },
+    });
+    return res.redirect("/users");
   } catch (error) {
     return res.status(500).send({
       error: {

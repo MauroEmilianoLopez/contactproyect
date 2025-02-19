@@ -10,6 +10,7 @@ export const access = async (req, res) => {
     const user = await prisma.contact.findUnique({
       where: {
         email: req.body.email,
+        isActive: true,
       },
       include: {
         photo: true,
@@ -20,7 +21,7 @@ export const access = async (req, res) => {
       return res.redirect("/users");
     }
     const error = new URLSearchParams({
-      error: "El usuario no esta registrado",
+      error: "El usuario no esta registrado u activo",
     });
     return res.redirect(`/?${error.toString()}`);
   } catch (error) {

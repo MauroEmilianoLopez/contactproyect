@@ -38,6 +38,15 @@
               </svg>
             </a>
           </nav>
+          <% if (userSession.isAdmin) { %>
+           
+            <form action="/users/status" method="post">
+              <input type="hidden" name="userId" value="<%= user.id %>">
+              <button type="submit">
+                <%= user.isActive ? "Borrar" : "Restaurar" %>
+              </button>
+            </form>
+            <% } %>
         </li>
         <% }) %>
       </ul>

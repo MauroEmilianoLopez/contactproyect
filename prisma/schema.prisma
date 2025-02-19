@@ -17,6 +17,7 @@ model Contact {
   age         Int?
   link        String?
   isAdmin     Boolean   @default(false)
+  isActive    Boolean   @default(true)
   fileId      Int?      @unique
   photo       File?     @relation(fields: [fileId], references: [id])
   categories  Category[]
@@ -24,7 +25,7 @@ model Contact {
 
 model Category {
   id              Int       @id @default(autoincrement())
-  name            String    @unique
+  name            String    
   parentId        Int?
   parent          Category? @relation("Subcategories", fields: [parentId], references: [id])
   subcategories   Category[] @relation("Subcategories")

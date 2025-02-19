@@ -137,6 +137,38 @@ body > main > picture img {
   border-radius: 0.5rem;
   color: var(--black);
 }
+
+#categories ul {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+#categories ul li {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+#categories ul li a {
+  width: 2rem;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--primary);
+  padding: 0.25rem;
+  cursor: pointer;
+}
+#categories ul li a svg {
+  fill: var(--white);
+}
 #addCategories {
   width: calc(50% - 1rem);
   padding: 0.25rem 0.25rem 2rem;
@@ -166,6 +198,7 @@ body > main > picture img {
   text-align: center;
   background-color: var(--dark-primary);
   color: var(--white);
+  margin-bottom: 0.25rem;
 }
 
 #addCategories form button {

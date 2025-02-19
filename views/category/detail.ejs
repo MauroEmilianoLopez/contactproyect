@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Category Detail</title>
-    <link rel="stylesheet" href="/css/categories/detail_category.css" />
+    <link rel="stylesheet" href="/css/categories/detail.css" />
   </head>
   <body>
     <%- include('../partial/user.ejs') %>
     <main>
       <header>
         <h1>Categoria: <%= category.name %></h1>
+        <a href="/users"> volver </a>
         <form action="/categories/remove" method="post">
           <input type="hidden" value="<%= category.id %>" name="parentId" />
           <button type="submit">
@@ -24,6 +25,11 @@
       </header>
       <article>
         <h2>Sub Categorias</h2>
+        <% if (category.subcategories.length == 0) { %>
+        <p>No hay sub categorias</p>
+        <% } else if (category.subcategories.length < 2) { %>
+        <p>Debe tener minimo 2 subcategorias</p>
+        <% } else { %>
         <ul>
           <% category.subcategories.forEach(subcategory => { %>
           <li>
@@ -46,8 +52,13 @@
           </li>
           <% }) %>
         </ul>
+        <% } %>
       </article>
-      <form action="/categories/addSubcategory" method="post">
+      <form
+        action="/categories/addSubcategory"
+        method="post"
+        autocomplete="off"
+      >
         <label for="newSub">Nueva sub-categoria</label>
         <input type="text" id="newSub" name="name" />
         <input type="hidden" value="<%= category.id %>" name="parentId" />
