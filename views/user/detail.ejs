@@ -78,7 +78,7 @@
           <% } %> <% }) %> <% } %>
         </details>
       </article>
-
+      <% if (userSession.isAdmin || userSession.id == contact.id) { %>
       <article>
         <h3>Asignar Categorias</h3>
         <form action="/users/setCategories/<%= contact.id %>" method="post">
@@ -110,8 +110,7 @@
           <button type="submit">Asignar</button>
         </form>
       </article>
-
-      <% if (userSession.isAdmin || userSession.id == contact.id) { %>
+      <% } %> <% if (userSession.isAdmin || userSession.id == contact.id) { %>
       <a href="/users/edit/<%= contact.id %>" id="editProfileBtn">
         Editar Perfil
       </a>

@@ -147,18 +147,22 @@ export const setCategoriesUser = async (req, res) => {
 
     subcategories = subcategories.filter((key) => key != "categories");
 
-    subcategories = subcategories.map((key) => ({ id: Number(req.body[key]) }));
+    let allCategories = subcategories.map((key) => ({
+      id: Number(req.body[key]),
+    }));
+    if (req.body.categories) {
+      let categories = Array.from(req.body.categories);
+      if (categories.length > 0) {
+        categories = categories.filter((element) => element != null);
 
-    let categories = Array.from(req.body.categories);
+        categories = categories.map((element) => ({ id: Number(element) }));
 
-    categories = categories.filter((element) => element != null);
+        categories = categories.concat(allCategories);
+        allCategories = [...new Set(categories)];
+      }
+    }
 
-    categories = categories.map((element) => ({ id: Number(element) }));
-
-    categories = categories.concat(subcategories);
-
-    const allCategories = [...new Set(categories)];
-
+    //return res.status(202).send(allCategories);
     const result = await prisma.contact.update({
       where: {
         id: Number(req.params.id),

@@ -8,28 +8,37 @@
   </head>
   <body>
     <main>
-      <header>Categoria: <%= category.name %></header>
-      <ul>
-        <% category.subcategories.forEach(subcategory => { %>
-        <li>
-          <%= subcategory.name %>
-          <form action="/categories/removeSubcategory">
-            <input
-              type="hidden"
-              value="<%= subcategory.id %>"
-              name="subcategory"
-            />
-            <input type="hidden" value="<%= category.id %>" name="parentId" />
-            <button type="button">Borrar</button>
-          </form>
-        </li>
-        <% }) %>
-      </ul>
+      <header>
+        <h1>Categoria: <%= category.name %></h1>
+        <form action="/categories/remove" method="post">
+          <input type="hidden" value="<%= category.id %>" name="parentId" />
+          <button type="submit">Borrar Categoria</button>
+        </form>
+      </header>
+      <details>
+        <summary>Sub Categorias</summary>
+        <ul>
+          <% category.subcategories.forEach(subcategory => { %>
+          <li>
+            <%= subcategory.name %>
+            <form action="/categories/removeSubcategory" method="post">
+              <input
+                type="hidden"
+                value="<%= subcategory.id %>"
+                name="subcategory"
+              />
+              <input type="hidden" value="<%= category.id %>" name="parentId" />
+              <button type="submit">Borrar</button>
+            </form>
+          </li>
+          <% }) %>
+        </ul>
+      </details>
       <form action="/categories/addSubcategory" method="post">
         <label for="newSub">Nueva sub-categoria</label>
         <input type="text" id="newSub" name="name" />
         <input type="hidden" value="<%= category.id %>" name="parentId" />
-        <button type="button">Agregar</button>
+        <button type="submit">Agregar</button>
       </form>
     </main>
   </body>
