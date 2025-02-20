@@ -26,32 +26,54 @@ export const listUser = async (req, res) => {
 
 // Función para mostrar la vista de edición de un usuario
 export const editUser = async (req, res) => {
-  const { id = 0 } = req.params; // Obtiene el ID del usuario desde los parámetros de la URL
-  const user = await prisma.contact.findUnique({
-    where: { id: Number(id) }, // Busca al usuario con el ID proporcionado
-    include: { photo: true }, // Incluye la foto del usuario en la consulta
-  });
-  return res.render("user/edit", { contact: user }); // Renderiza la vista de edición con los datos del usuario
+  try {
+    const { id = 0 } = req.params; // Obtiene el ID del usuario desde los parámetros de la URL
+    const user = await prisma.contact.findUniqueOrThrow({
+      where: { id: Number(id) }, // Busca al usuario con el ID proporcionado
+      include: { photo: true }, // Incluye la foto del usuario en la consulta
+    });
+    return res.render("user/edit", { contact: user }); // Renderiza la vista de edición con los datos del usuario
+  } catch (error) {
+    return res.status(500).render("Error", {
+      error: {
+        code: error.code, // Código del error
+        msg: error.message, // Mensaje del error
+        field: error.meta, // Detalles adicionales del error
+      },
+      link: req.get("Referer") || "/users",
+    });
+  }
 };
 
 // Función para mostrar los detalles de un usuario, incluyendo sus categorías
 export const detailUser = async (req, res) => {
-  const { id = 0 } = req.params; // Obtiene el ID del usuario desde los parámetros de la URL
-  const mainCategories = await prisma.category.findMany({
-    where: { parentId: null }, // Obtiene las categorías principales
-    include: { subcategories: true }, // Incluye las subcategorías asociadas
-  });
-  const user = await prisma.contact.findUnique({
-    where: { id: Number(id) }, // Busca al usuario con el ID proporcionado
-    include: {
-      photo: true, // Incluye la foto del usuario
-      categories: { include: { parent: true } }, // Incluye las categorías del usuario y su categoría principal
-    },
-  });
-  return res.render("user/detail", {
-    contact: user,
-    categories: mainCategories,
-  }); // Renderiza la vista con los detalles del usuario y categorías
+  try {
+    const { id = 0 } = req.params; // Obtiene el ID del usuario desde los parámetros de la URL
+    const mainCategories = await prisma.category.findMany({
+      where: { parentId: null }, // Obtiene las categorías principales
+      include: { subcategories: true }, // Incluye las subcategorías asociadas
+    });
+    const user = await prisma.contact.findUniqueOrThrow({
+      where: { id: Number(id) }, // Busca al usuario con el ID proporcionado
+      include: {
+        photo: true, // Incluye la foto del usuario
+        categories: { include: { parent: true } }, // Incluye las categorías del usuario y su categoría principal
+      },
+    });
+    return res.render("user/detail", {
+      contact: user,
+      categories: mainCategories,
+    }); // Renderiza la vista con los detalles del usuario y categorías
+  } catch (error) {
+    return res.status(500).render("Error", {
+      error: {
+        code: error.code, // Código del error
+        msg: error.message, // Mensaje del error
+        field: error.meta, // Detalles adicionales del error
+      },
+      link: req.get("Referer") || "/users",
+    });
+  }
 };
 
 // Función para guardar un nuevo usuario en la base de datos
@@ -79,12 +101,13 @@ export const saveUser = async (req, res) => {
     });
     return res.redirect(`/users/show/${contact.id}`); // Redirige a la página de detalles del usuario recién creado
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("Error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
     });
   }
 };
@@ -129,7 +152,7 @@ export const updateUser = async (req, res) => {
     });
     return res.redirect(`/users/show/${contact.id}`); // Redirige a la página de detalles del usuario actualizado
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("Error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error

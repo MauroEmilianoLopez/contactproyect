@@ -58,5 +58,11 @@ app.use("/users", userRouter);
 import categoryRouter from "./routes/category.js";
 app.use("/categories", categoryRouter);
 
+app.get("*", (req, res) =>
+  res.render("404", {
+    link: req.get("Referer") || "/users",
+  })
+);
+
 // Inicia el servidor en el puerto definido
 app.listen(port, init);

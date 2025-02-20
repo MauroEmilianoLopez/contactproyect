@@ -1,0 +1,62 @@
+@import url("imports/base.css");
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+main {
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 1/1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  border-radius: 50%;
+  padding: 1rem;
+  gap: 1rem;
+}
+main picture {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+main article h2 {
+  text-transform: uppercase;
+  color: var(--white);
+  font-style: italic;
+  text-align: center;
+}
+
+main article a {
+  padding: 0.75rem 1.25rem;
+  background-color: var(--dark-primary);
+  color: var(--white);
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 1rem;
+  border: 0.2rem solid transparent;
+  transform: scale(0.95);
+  transition: all 300ms ease-in-out;
+}
+main article a:hover {
+  background-color: transparent;
+  color: var(--dark-primary);
+  border-color: var(--dark-primary);
+  transform: scale(1);
+}

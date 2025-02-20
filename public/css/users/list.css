@@ -74,7 +74,13 @@ body > main > header nav a:hover {
 }
 .users li {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.users li dl {
+  flex: 1;
+  display: flex;
+  flex-flow: row wrap;
   gap: 1rem;
 }
 .users li nav {
@@ -95,8 +101,44 @@ body > main > header nav a:hover {
   justify-content: center;
   align-items: center;
 }
+
+.users li nav a[target="_blank"] {
+  background-color: var(--dark-primary);
+  padding: 0.5rem;
+}
+
 .users li nav a svg {
   fill: var(--black);
+}
+
+.users li nav a[target="_blank"] svg {
+  fill: var(--white);
+}
+
+.users li form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.users li form button {
+  width: 2rem;
+  height: 2rem;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  padding: 0.5rem;
+  background-color: var(--danger);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.users li form button.active {
+  background-color: var(--primary);
+}
+
+.users li form button svg {
+  fill: var(--white);
 }
 
 body > main > nav {

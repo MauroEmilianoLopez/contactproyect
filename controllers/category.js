@@ -13,15 +13,26 @@ export const editCategory = (req, res) => {
 
 // Función para mostrar los detalles de una categoría, incluyendo sus subcategorías
 export const detailCategory = async (req, res) => {
-  const category = await prisma.category.findUnique({
-    where: {
-      id: Number(req.params.id), // Obtiene la categoría usando su ID desde los parámetros de la URL
-    },
-    include: {
-      subcategories: true, // Incluye las subcategorías asociadas con esta categoría
-    },
-  });
-  return res.render("category/detail", { category }); // Renderiza la vista con los detalles de la categoría
+  try {
+    const category = await prisma.category.findUniqueOrThrow({
+      where: {
+        id: Number(req.params.id), // Obtiene la categoría usando su ID desde los parámetros de la URL
+      },
+      include: {
+        subcategories: true, // Incluye las subcategorías asociadas con esta categoría
+      },
+    });
+    return res.render("category/detail", { category }); // Renderiza la vista con los detalles de la categoría
+  } catch (error) {
+    return res.status(500).render("Error", {
+      error: {
+        code: error.code, // Código del error
+        msg: error.message, // Mensaje del error
+        field: error.meta, // Detalles adicionales del error
+      },
+      link: req.get("Referer") || "/users",
+    });
+  }
 };
 
 // Función para guardar una nueva categoría en la base de datos
@@ -35,12 +46,13 @@ export const saveCategory = async (req, res) => {
     });
     return res.redirect(`/categories/show/${category.id}`); // Redirige a la página de detalles de la nueva categoría
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("Error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
     });
   }
 };
@@ -75,12 +87,13 @@ export const removeSubCategory = async (req, res) => {
     });
     return res.redirect(`/categories/show/${parentCategory.id}`); // Redirige a la página de detalles de la categoría principal
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("Error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
     });
   }
 };
@@ -94,12 +107,13 @@ export const addSubCategory = async (req, res) => {
     });
     return res.redirect(`/categories/show/${newSub.parentId}`); // Redirige a la página de detalles de la categoría principal
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
     });
   }
 };
@@ -137,12 +151,13 @@ export const removeCategory = async (req, res) => {
 
     return res.redirect("/users/"); // Redirige a la página de usuarios después de eliminar la categoría
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("Error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
     });
   }
 };
