@@ -163,10 +163,24 @@ body > main > picture img {
   align-items: center;
   border-radius: 50%;
   background-color: var(--primary);
-  padding: 0.25rem;
+  padding: 0.5rem;
   cursor: pointer;
 }
 #categories ul li a svg {
+  fill: var(--white);
+}
+#categories ul li form button {
+  width: 2rem;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--danger);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+#categories ul li form button svg {
   fill: var(--white);
 }
 #addCategories {

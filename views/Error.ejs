@@ -261,8 +261,8 @@
         </svg>
       </picture>
       <article>
-        <h2><%=error.field.cause %></h2>
-        <p>Model: <%= error.field.modelName %></p>
+        <h2><%=error?.field?.cause %></h2>
+        <p>Model: <%= error?.field?.modelName %></p>
         <p>Code:<%= error.code %></p>
         <p><%= error.msg %></p>
         <a href="<%= link %>">Regresar</a>

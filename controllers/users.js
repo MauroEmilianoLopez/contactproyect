@@ -116,14 +116,14 @@ export const saveUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     let file;
-    let contact = await prisma.contact.findUnique({
+    let contact = await prisma.contact.findUniqueOrThrow({
       where: { id: Number(req.params.id) }, // Obtiene el usuario con el ID proporcionado
     });
 
     // Si el usuario tiene un archivo y se sube un nuevo archivo, actualiza el archivo
     if (req.files && req.files.length && contact.fileId != null) {
       await prisma.file.update({
-        where: { id: Number(contact.fileId) },
+        where: { id: Number(contact?.fileId) },
         data: { filename: req.files[0].filename },
       });
     }
@@ -137,7 +137,7 @@ export const updateUser = async (req, res) => {
 
     req.body.isAdmin = String(req.body.email).includes("@dasc.com"); // Define si el usuario es administrador basado en su email
     let contactUpdate = await prisma.contact.update({
-      where: { id: contact.id }, // Actualiza el usuario con el ID correspondiente
+      where: { id: contact?.id }, // Actualiza el usuario con el ID correspondiente
       data: {
         name: req.body.name, // Actualiza el nombre del usuario
         email: req.body.email, // Actualiza el email del usuario
@@ -147,7 +147,7 @@ export const updateUser = async (req, res) => {
         gender: req.body.gender, // Actualiza el género del usuario
         link: req.body.link, // Actualiza el enlace del usuario
         isAdmin: req.body.isAdmin, // Actualiza si el usuario es administrador
-        fileId: contact.fileId ? contact.fileId : file.id, // Actualiza el archivo asociado
+        fileId: contact?.fileId ? contact?.fileId : file?.id, // Actualiza el archivo asociado
       },
     });
     return res.redirect(`/users/show/${contact.id}`); // Redirige a la página de detalles del usuario actualizado
@@ -158,6 +158,7 @@ export const updateUser = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
     });
   }
 };
@@ -193,12 +194,13 @@ export const setCategoriesUser = async (req, res) => {
     });
     return res.redirect(`/users/show/${req.params.id}`); // Redirige a la página de detalles del usuario actualizado
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("Error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
     });
   }
 };
@@ -215,12 +217,42 @@ export const setStatusUser = async (req, res) => {
     });
     return res.redirect("/users"); // Redirige a la lista de usuarios
   } catch (error) {
-    return res.status(500).send({
+    return res.status(500).render("Error", {
       error: {
         code: error.code, // Código del error
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
+      link: req.get("Referer") || "/users",
+    });
+  }
+};
+
+export const removeCategory = async (req, res) => {
+  try {
+    const contact = await prisma.contact.findUniqueOrThrow({
+      where: { id: Number(req.body.user) },
+      include: { categories: true },
+    });
+
+    let categories = contact.categories.map(({ id }) => ({ id }));
+    categories = categories.filter(({ id }) => id != req.body.category);
+    await prisma.contact.update({
+      where: { id: Number(contact.id) }, // Actualiza las categorías del usuario con el ID proporcionado
+      data: {
+        categories: { set: [...new Set(categories)] }, // Asocia las categorías al usuario
+      },
+      include: { categories: true }, // Incluye las categorías del usuario en la respuesta
+    });
+    return res.redirect(`/users/show/${contact.id}`);
+  } catch (error) {
+    return res.status(500).render("Error", {
+      error: {
+        code: error.code, // Código del error
+        msg: error.message, // Mensaje de error
+        field: error.meta, // Detalles adicionales del error
+      },
+      link: req.get("Referer") || "/users",
     });
   }
 };

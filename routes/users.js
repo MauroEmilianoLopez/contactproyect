@@ -9,6 +9,7 @@ import {
   updateUser, // Actualiza la información de un usuario
   setCategoriesUser, // Asocia categorías a un usuario
   setStatusUser, // Cambia el estado activo/inactivo de un usuario
+  removeCategory,
 } from "../controllers/users.js"; // Importa los controladores de usuarios
 
 // Importa los middlewares
@@ -44,6 +45,8 @@ userRouter.post("/save", [admin, upload.any()], saveUser);
 
 // Ruta POST para cambiar el estado activo/inactivo de un usuario (solo accesible por administradores)
 userRouter.post("/status", [admin], setStatusUser);
+// Ruta POST para cambiar el estado activo/inactivo de un usuario (solo accesible por administradores)
+userRouter.post("/removeCategory", [], removeCategory);
 
 // Exporta el enrutador para que pueda ser utilizado en otras partes de la aplicación
 export default userRouter;

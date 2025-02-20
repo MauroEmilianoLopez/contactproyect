@@ -80,7 +80,7 @@
 
         <fieldset>
           <label for="gender">Sexo:</label>
-          <select id="gender">
+          <select id="gender" name="gender">
             <option value="" disabled>Seleccionar</option>
             <option value="Masculino" <%= contact.gender == "Masculino" ? "selected" : "" %>>Masculino</option>
             <option value="Femenino" <%= contact.gender == "Femenino" ? "selected" : "" %>>Femenino</option>
@@ -108,10 +108,9 @@
           <input
             type="url"
             id="linkedinUrl"
-
-            name="link",
+            name="link"
             value="<%= contact.link %>"
-                       placeholder="Ingrese su URL de LinkedIn"
+            placeholder="Ingrese su URL de LinkedIn"
           />
         </fieldset>
 
