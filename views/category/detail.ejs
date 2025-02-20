@@ -12,6 +12,7 @@
       <header>
         <h1>Categoria: <%= category.name %></h1>
         <a href="/users"> volver </a>
+        <% if (userSession.isAdmin) { %>
         <form action="/categories/remove" method="post">
           <input type="hidden" value="<%= category.id %>" name="parentId" />
           <button type="submit">
@@ -22,6 +23,7 @@
             </svg>
           </button>
         </form>
+        <% } %>
       </header>
       <article>
         <h2>Sub Categorias</h2>
@@ -33,7 +35,7 @@
         <ul>
           <% category.subcategories.forEach(subcategory => { %>
           <li>
-            <%= subcategory.name %>
+            <%= subcategory.name %> <% if (userSession.isAdmin) { %>
             <form action="/categories/removeSubcategory" method="post">
               <input
                 type="hidden"
@@ -49,11 +51,13 @@
                 </svg>
               </button>
             </form>
+            <% } %>
           </li>
           <% }) %>
         </ul>
         <% } %>
       </article>
+      <% if (userSession.isAdmin) { %>
       <form
         action="/categories/addSubcategory"
         method="post"
@@ -64,6 +68,7 @@
         <input type="hidden" value="<%= category.id %>" name="parentId" />
         <button type="submit">Agregar</button>
       </form>
+      <% } %>
     </main>
   </body>
 </html>

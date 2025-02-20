@@ -1,6 +1,9 @@
+// Importa PrismaClient desde Prisma para interactuar con la base de datos
 import { PrismaClient } from "@prisma/client";
+// Crea una nueva instancia de PrismaClient
 const prisma = new PrismaClient();
 
+// Función principal asincrónica para sembrar datos en la base de datos
 async function main() {
   // Crear archivos (imágenes) para los usuarios
   const files = await Promise.all([
@@ -23,6 +26,7 @@ async function main() {
         age: 25,
         link: "https://www.linkedin.com/in/alejandro-alonso-406b25162/",
         isAdmin: false,
+        // Asocia el archivo de imagen con el usuario
         fileId: files.find(
           ({ filename }) => filename === "alejandro-alonso.jpg"
         ).id,
@@ -38,6 +42,7 @@ async function main() {
         age: 30,
         link: "https://www.linkedin.com/in/alex-sanchez-mu%C3%B1oz-a6752122a/",
         isAdmin: false,
+        // Asocia el archivo de imagen con el usuario
         fileId: files.find(
           ({ filename }) => filename === "alex-sanchez-muñoz.jpg"
         ).id,
@@ -49,6 +54,7 @@ async function main() {
         email: "josepreda@dasc.com",
         gender: "Masculino",
         isAdmin: true,
+        // Asocia el archivo de imagen con el usuario
         fileId: files.find(({ filename }) => filename === "jose-preda.jpg").id,
       },
     }),
@@ -62,6 +68,7 @@ async function main() {
         age: 35,
         link: "https://www.linkedin.com/in/barbarapda/",
         isAdmin: false,
+        // Asocia el archivo de imagen con el usuario
         fileId: files.find(
           ({ filename }) => filename === "barvara-perez-arce.jpg"
         ).id,
@@ -77,6 +84,7 @@ async function main() {
         age: 40,
         link: "https://www.linkedin.com/in/jekahwati/",
         isAdmin: false,
+        // Asocia el archivo de imagen con el usuario
         fileId: files.find(
           ({ filename }) => filename === "jesus-eduardo-kawhati.jpg"
         ).id,
@@ -87,45 +95,49 @@ async function main() {
   // Crear 3 categorías principales
   const category1 = await prisma.category.create({
     data: {
-      name: "Educación",
+      name: "Educación", // Crea la categoría principal "Educación"
     },
   });
 
   const category2 = await prisma.category.create({
     data: {
-      name: "Rubro",
+      name: "Rubro", // Crea la categoría principal "Rubro"
     },
   });
 
   const category3 = await prisma.category.create({
     data: {
-      name: "Sector",
+      name: "Sector", // Crea la categoría principal "Sector"
     },
   });
 
   // Crear subcategorías para cada categoría principal
   await prisma.category.createMany({
     data: [
-      { name: "Inicial", parentId: category1.id },
-      { name: "Secundaria", parentId: category1.id },
-      { name: "Terciaria", parentId: category1.id },
-      { name: "Universitaria", parentId: category1.id },
-      { name: "Gastronomia", parentId: category2.id },
-      { name: "Logistica", parentId: category2.id },
-      { name: "Agronomia", parentId: category2.id },
-      { name: "Publico", parentId: category3.id },
-      { name: "Privado", parentId: category3.id },
+      { name: "Inicial", parentId: category1.id }, // Subcategoría "Inicial" de la categoría "Educación"
+      { name: "Secundaria", parentId: category1.id }, // Subcategoría "Secundaria" de la categoría "Educación"
+      { name: "Terciaria", parentId: category1.id }, // Subcategoría "Terciaria" de la categoría "Educación"
+      { name: "Universitaria", parentId: category1.id }, // Subcategoría "Universitaria" de la categoría "Educación"
+      { name: "Gastronomia", parentId: category2.id }, // Subcategoría "Gastronomia" de la categoría "Rubro"
+      { name: "Logistica", parentId: category2.id }, // Subcategoría "Logistica" de la categoría "Rubro"
+      { name: "Agronomia", parentId: category2.id }, // Subcategoría "Agronomia" de la categoría "Rubro"
+      { name: "Publico", parentId: category3.id }, // Subcategoría "Publico" de la categoría "Sector"
+      { name: "Privado", parentId: category3.id }, // Subcategoría "Privado" de la categoría "Sector"
     ],
   });
 
+  // Imprime un mensaje indicando que los datos se sembraron exitosamente
   console.log("Datos sembrados exitosamente.");
 }
 
+// Llama a la función principal
 main()
   .catch((e) => {
+    // Si ocurre un error, lo muestra en la consola y termina el proceso
     console.error(e);
     process.exit(1);
   })
   .finally(async () => {
+    // Finalmente, desconecta Prisma de la base de datos
     await prisma.$disconnect();
   });

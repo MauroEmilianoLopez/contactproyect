@@ -13,9 +13,11 @@
     <main>
       <header>
         <h1>Lista de Contactos</h1>
+        <% if (userSession.isAdmin) { %>
         <nav>
           <a href="/users/create">Nuevo Contacto</a>
-        </nav>
+        </nav>       
+      <% } %>
       </header>
       <ul class="users">
         <% users.forEach(user => { %>
@@ -63,9 +65,11 @@
       <header>
        
           <h1>Lista de Categorias</h1>
+          <% if (userSession.isAdmin) { %>
           <nav>
             <a href="/categories/create">Nueva Categoría</a>
-          </nav>
+          </nav>           
+          <% } %>
       </header>
       <ul class="categories">
         <% categories.forEach(category => { %>

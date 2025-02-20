@@ -1,40 +1,44 @@
+// Configuración del generador del cliente Prisma
 generator client {
   provider = "prisma-client-js"
 }
 
+// Configuración de la base de datos (SQLite)
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // La URL se obtiene de variables de entorno
 }
 
+// Modelo para gestionar contactos
 model Contact {
-  id          Int       @id @default(autoincrement())
-  name        String
-  email       String    @unique
-  phone       String?
-  address     String?
-  gender      String?
-  age         Int?
-  link        String?
-  isAdmin     Boolean   @default(false)
-  isActive    Boolean   @default(true)
-  fileId      Int?      @unique
-  photo       File?     @relation(fields: [fileId], references: [id])
-  categories  Category[]
+  id          Int       @id @default(autoincrement()) // ID único autoincremental
+  name        String    // Nombre obligatorio del contacto
+  email       String    @unique // Email único (no duplicados)
+  phone       String?   // Teléfono opcional
+  address     String?   // Dirección opcional
+  gender      String?   // Género opcional
+  age         Int?      // Edad opcional
+  link        String?   // Enlace/URL opcional
+  isAdmin     Boolean   @default(false) // Rol de administrador (default: false)
+  isActive    Boolean   @default(true)  // Estado activo/inactivo (default: true)
+  fileId      Int?      @unique // Relación opcional con archivo (foto)
+  photo       File?     @relation(fields: [fileId], references: [id]) // Relación 1-1 con File
+  categories  Category[] // Relación muchos-a-muchos con categorías
 }
 
+// Modelo para categorías jerárquicas
 model Category {
-  id              Int       @id @default(autoincrement())
-  name            String    
-  parentId        Int?
-  parent          Category? @relation("Subcategories", fields: [parentId], references: [id])
-  subcategories   Category[] @relation("Subcategories")
-  contacts        Contact[]
+  id              Int       @id @default(autoincrement()) // ID único autoincremental
+  name            String    // Nombre de la categoría (obligatorio)
+  parentId        Int?      // ID opcional de categoría padre
+  parent          Category? @relation("Subcategories", fields: [parentId], references: [id]) // Relación recursiva
+  subcategories   Category[] @relation("Subcategories") // Subcategorías relacionadas
+  contacts        Contact[] // Contactos asociados a esta categoría
 }
 
+// Modelo para gestión de archivos
 model File {
-  id              Int       @id @default(autoincrement())
-  filename        String    @unique
-  contact         Contact?  
+  id              Int       @id @default(autoincrement()) // ID único autoincremental
+  filename        String    @unique // Nombre único del archivo
+  contact         Contact?  // Relación opcional con Contacto (foto de perfil)
 }
-
