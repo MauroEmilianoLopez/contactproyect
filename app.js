@@ -58,9 +58,10 @@ app.use("/users", userRouter);
 import categoryRouter from "./routes/category.js";
 app.use("/categories", categoryRouter);
 
+// Maneja cualquier ruta no definida (404)
 app.get("*", (req, res) =>
   res.render("404", {
-    link: req.get("Referer") || "/users",
+    link: req.get("Referer") || "/users", // Redirige a la página anterior o a los usuarios
   })
 );
 

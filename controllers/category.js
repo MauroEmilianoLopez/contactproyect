@@ -30,7 +30,7 @@ export const detailCategory = async (req, res) => {
         msg: error.message, // Mensaje del error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la página anterior o a la página de usuarios
     });
   }
 };
@@ -52,7 +52,7 @@ export const saveCategory = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la página anterior o a la página de usuarios
     });
   }
 };
@@ -93,7 +93,7 @@ export const removeSubCategory = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la página anterior o a la página de usuarios
     });
   }
 };
@@ -113,7 +113,7 @@ export const addSubCategory = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la página anterior o a la página de usuarios
     });
   }
 };
@@ -135,7 +135,7 @@ export const removeCategory = async (req, res) => {
           set: [], // Elimina todas las subcategorías de la categoría
         },
       },
-      include: { subcategories: true },
+      include: { subcategories: true }, // Incluye las subcategorías actualizadas
     });
 
     // Elimina la categoría principal de la base de datos
@@ -157,7 +157,7 @@ export const removeCategory = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la página anterior o a la página de usuarios
     });
   }
 };

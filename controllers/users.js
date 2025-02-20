@@ -40,7 +40,7 @@ export const editUser = async (req, res) => {
         msg: error.message, // Mensaje del error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la lista de usuarios si ocurre un error
     });
   }
 };
@@ -61,9 +61,9 @@ export const detailUser = async (req, res) => {
       },
     });
     return res.render("user/detail", {
-      contact: user,
-      categories: mainCategories,
-    }); // Renderiza la vista con los detalles del usuario y categorías
+      contact: user, // Muestra los detalles del usuario
+      categories: mainCategories, // Muestra las categorías principales
+    });
   } catch (error) {
     return res.status(500).render("Error", {
       error: {
@@ -71,7 +71,7 @@ export const detailUser = async (req, res) => {
         msg: error.message, // Mensaje del error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la lista de usuarios si ocurre un error
     });
   }
 };
@@ -107,7 +107,7 @@ export const saveUser = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la lista de usuarios si ocurre un error
     });
   }
 };
@@ -124,14 +124,14 @@ export const updateUser = async (req, res) => {
     if (req.files && req.files.length && contact.fileId != null) {
       await prisma.file.update({
         where: { id: Number(contact?.fileId) },
-        data: { filename: req.files[0].filename },
+        data: { filename: req.files[0].filename }, // Actualiza el archivo
       });
     }
 
     // Si el usuario no tiene un archivo y se sube uno, crea un nuevo archivo
     if (req.files && req.files.length && contact.fileId == null) {
       file = await prisma.file.create({
-        data: { filename: req.files[0].filename },
+        data: { filename: req.files[0].filename }, // Crea un nuevo archivo para el usuario
       });
     }
 
@@ -158,7 +158,7 @@ export const updateUser = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la lista de usuarios si ocurre un error
     });
   }
 };
@@ -171,8 +171,8 @@ export const setCategoriesUser = async (req, res) => {
     subcategories = subcategories.filter((key) => key != "categories"); // Filtra la clave "categories" si existe
 
     let allCategories = subcategories.map((key) => ({
-      id: Number(req.body[key]),
-    })); // Mapea las claves a un formato de categoría con ID
+      id: Number(req.body[key]), // Mapea cada subcategoría a su formato de ID
+    }));
 
     // Si el usuario tiene categorías seleccionadas, las concatena con las nuevas categorías
     if (req.body.categories) {
@@ -185,6 +185,7 @@ export const setCategoriesUser = async (req, res) => {
       }
     }
 
+    // Actualiza las categorías del usuario
     const result = await prisma.contact.update({
       where: { id: Number(req.params.id) }, // Actualiza las categorías del usuario con el ID proporcionado
       data: {
@@ -200,7 +201,7 @@ export const setCategoriesUser = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la lista de usuarios si ocurre un error
     });
   }
 };
@@ -223,28 +224,29 @@ export const setStatusUser = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la lista de usuarios si ocurre un error
     });
   }
 };
 
+// Función para eliminar una categoría asociada a un usuario
 export const removeCategory = async (req, res) => {
   try {
     const contact = await prisma.contact.findUniqueOrThrow({
       where: { id: Number(req.body.user) },
-      include: { categories: true },
+      include: { categories: true }, // Incluye las categorías del usuario en la respuesta
     });
 
-    let categories = contact.categories.map(({ id }) => ({ id }));
-    categories = categories.filter(({ id }) => id != req.body.category);
+    let categories = contact.categories.map(({ id }) => ({ id })); // Obtiene las categorías del usuario
+    categories = categories.filter(({ id }) => id != req.body.category); // Elimina la categoría a eliminar
     await prisma.contact.update({
       where: { id: Number(contact.id) }, // Actualiza las categorías del usuario con el ID proporcionado
       data: {
-        categories: { set: [...new Set(categories)] }, // Asocia las categorías al usuario
+        categories: { set: [...new Set(categories)] }, // Asocia las categorías actualizadas al usuario
       },
       include: { categories: true }, // Incluye las categorías del usuario en la respuesta
     });
-    return res.redirect(`/users/show/${contact.id}`);
+    return res.redirect(`/users/show/${contact.id}`); // Redirige a la página de detalles del usuario
   } catch (error) {
     return res.status(500).render("Error", {
       error: {
@@ -252,7 +254,7 @@ export const removeCategory = async (req, res) => {
         msg: error.message, // Mensaje de error
         field: error.meta, // Detalles adicionales del error
       },
-      link: req.get("Referer") || "/users",
+      link: req.get("Referer") || "/users", // Redirige al usuario a la lista de usuarios si ocurre un error
     });
   }
 };
